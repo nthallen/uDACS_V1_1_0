@@ -15,12 +15,12 @@
 #include <hpl_rtc_base.h>
 
 /*! The buffer size for USART */
-#define USART_CTRL_BUFFER_SIZE 16
+// #define USART_CTRL_BUFFER_SIZE 16
 
-struct usart_async_descriptor USART_CTRL;
+// struct usart_async_descriptor USART_CTRL;
 struct timer_descriptor       TIMER_0;
 
-static uint8_t USART_CTRL_buffer[USART_CTRL_BUFFER_SIZE];
+// static uint8_t USART_CTRL_buffer[USART_CTRL_BUFFER_SIZE];
 
 struct spi_m_async_descriptor AD_SPI;
 
@@ -179,18 +179,21 @@ void SD_SPI_init(void)
  *
  * Enables register interface and peripheral clock
  */
+#if 0
 void USART_CTRL_CLOCK_init()
 {
 
 	_pm_enable_bus_clock(PM_BUS_APBC, SERCOM5);
 	_gclk_enable_channel(SERCOM5_GCLK_ID_CORE, CONF_GCLK_SERCOM5_CORE_SRC);
 }
+#endif
 
 /**
  * \brief USART pinmux initialization function
  *
  * Set each required pin to USART functionality
  */
+#if 0
 void USART_CTRL_PORT_init()
 {
 
@@ -198,19 +201,20 @@ void USART_CTRL_PORT_init()
 
 	gpio_set_pin_function(UART_RX, PINMUX_PB23D_SERCOM5_PAD3);
 }
-
+#endif
 /**
  * \brief USART initialization function
  *
  * Enables USART peripheral, clocks and initializes USART driver
  */
+#if 0
 void USART_CTRL_init(void)
 {
 	USART_CTRL_CLOCK_init();
 	usart_async_init(&USART_CTRL, SERCOM5, USART_CTRL_buffer, USART_CTRL_BUFFER_SIZE, (void *)NULL);
 	USART_CTRL_PORT_init();
 }
-
+#endif
 /**
  * \brief Timer initialization function
  *
@@ -467,7 +471,7 @@ void system_init(void)
 	UC_I2C_init();
 
 	SD_SPI_init();
-	USART_CTRL_init();
+	// USART_CTRL_init();
 
 	TIMER_0_init();
 }

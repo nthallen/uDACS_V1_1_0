@@ -408,6 +408,12 @@
     <Compile Include="Config\RTE_Components.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="control.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="control.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="Device_Startup\startup_samd21.c">
       <SubType>compile</SubType>
     </Compile>
@@ -739,6 +745,18 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="main.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="subbus.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="subbus.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="usart.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="usart.h">
       <SubType>compile</SubType>
     </Compile>
   </ItemGroup>

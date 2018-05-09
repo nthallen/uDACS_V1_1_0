@@ -1,15 +1,28 @@
 #include <atmel_start.h>
+#include "usart.h"
+// #include "subbus.h"
+#include "control.h"
+// #include "spi.h"
+// #include "commands.h"
 
-int main(int argc, char **argv)
+int main(void)
 {
-	/* Initializes MCU, drivers and middleware */
-	atmel_start_init();
-
-	/* Replace with your application code */
-	while (1) {
-    delay_ms(250);
-    gpio_set_pin_level(SPR7, true);
-    delay_ms(750);
-    gpio_set_pin_level(SPR7, false);
-	}
+  /* Initializes MCU, drivers and middleware */
+  atmel_start_init();
+  subbus_t subbus;
+  // subbus.add_driver(new subbus_fail_sw);
+  subbus.reset();
+  uart_init();
+  Control ctrl(&subbus);
+  // spi_init();
+  // commands_init();
+  while (1) {
+    ctrl.poll();
+    // poll_spi();
+    // poll_commands();
+    #if SUBBUS_INTERRUPTS
+      if (subbus_intr_req)
+        intr_service();
+    #endif
+  }
 }
