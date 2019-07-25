@@ -20,9 +20,7 @@ class Control {
     static const int RECV_BUF_SIZE = USART_CTRL_RX_BUFFER_SIZE;
     uint8_t cmd[RECV_BUF_SIZE];							// Current Command
     int cmd_byte_num;
-    #if USE_SUBBUS
     subbus_t *sb;
-    #endif
     #ifdef CMD_RCV_TIMEOUT
       int cmd_rcv_timer;
     #endif

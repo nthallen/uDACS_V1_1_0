@@ -99,5 +99,11 @@ class subbus_t {
       static interrupt_t interrupts[N_INTERRUPTS];
     #endif
 };
+
+#else
+class subbus_t {
+  public:
+    int ver;
+};
 #endif // USE_SUBBUS
 #endif

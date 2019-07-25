@@ -118,6 +118,7 @@ void Control::read_multi(uint8_t *cmd) {
       }
       end = addr;
     } else if (*cmd == '|') {
+#if USE_SUBBUS
       if ( sb->read( addr, &result ) ) {
         uart_send_char('M');
         hex_out(result);
@@ -126,6 +127,11 @@ void Control::read_multi(uint8_t *cmd) {
         uart_send_char('0');
         result = 0;
       }
+#else
+        uart_send_char('m');
+        uart_send_char('0');
+        result = 0;
+#endif
       ++cmd;
       if ( read_hex( &cmd, &rep ) ) {
         SendErrorMsg("3");
@@ -155,6 +161,7 @@ void Control::read_multi(uint8_t *cmd) {
         SendErrorMsg("3");
         return;
       }
+#if USE_SUBBUS
       if ( sb->read( addr, &result ) ) {
         uart_send_char('M');
         hex_out(result);
@@ -162,6 +169,10 @@ void Control::read_multi(uint8_t *cmd) {
         uart_send_char('m');
         uart_send_char('0');
       }
+#else
+        uart_send_char('m');
+        uart_send_char('0');
+#endif
     }
     if (*cmd == '\n' || *cmd == '\r') {
       SendMsg("");
@@ -218,15 +229,25 @@ void Control::parse_command(uint8_t *cmd) {
   }
   switch(cmd_code) {
     case 'R':                         // READ with ACK 'R'
+#if USE_SUBBUS
       expack = sb->read(arg1, &rv);
+#else
+      expack = 0;
+#endif
       SendCodeVal(expack ? 'R' : 'r', rv);
       break;
     case 'W':                         // WRITE with ACK 'W'
+#if USE_SUBBUS
       expack = sb->write(arg1, arg2);
+#else
+      expack = 0;
+#endif
       SendMsg(expack ? "W" : "w");
       break;
     case 'F':
+#if USE_SUBBUS
       sb->set_fail(arg1);
+#endif
       SendMsg( "F" );
       break;
     case 'f':
@@ -243,7 +264,9 @@ void Control::parse_command(uint8_t *cmd) {
       SendCode(cmd_code);
       break;
     case 'B':
+#if USE_SUBBUS
       sb->reset();
+#endif
 #if SUBBUS_INTERRUPTS
       init_interrupts();
 #endif

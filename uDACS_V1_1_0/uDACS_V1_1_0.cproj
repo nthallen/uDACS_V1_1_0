@@ -747,9 +747,6 @@
     <Compile Include="main.cpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="subbus.cpp">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="subbus.h">
       <SubType>compile</SubType>
     </Compile>

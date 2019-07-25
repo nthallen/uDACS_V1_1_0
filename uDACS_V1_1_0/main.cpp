@@ -10,8 +10,10 @@ int main(void)
   /* Initializes MCU, drivers and middleware */
   atmel_start_init();
   subbus_t subbus;
-  // subbus.add_driver(new subbus_fail_sw);
+#if USE_SUBBUS
+  subbus.add_driver(new subbus_fail_sw);
   subbus.reset();
+#endif
   uart_init();
   Control ctrl(&subbus);
   // spi_init();
